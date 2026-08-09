@@ -20,11 +20,11 @@ def main_process(args):
         df_E = pd.DataFrame(columns = ['a','b','theta','z','A2','E','E_p1','E_p2','E_t','machine_type','status','file_name'])##いじる
         df_E.to_csv(auto_csv_path,index=False)##step3を二段階でやる場合二段階目ではinitをやらないので念のためmainにも組み込んでおく
 
-    os.chdir(os.path.join(args.auto_dir,'gaussian'))
+    os.chdir(os.path.join(auto_dir,'gaussian'))
     isOver = False
     while not(isOver):
         #check
-        isOver = listen(args.auto_dir,args.monomer_name,args.num_nodes,args.isTest)##argsの中身を取る
+        isOver = listen(auto_dir,args.monomer_name,args.num_nodes,args.isTest)##argsの中身を取る
         time.sleep(1)
 
 def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取るか中身をばらして取るかの違い
