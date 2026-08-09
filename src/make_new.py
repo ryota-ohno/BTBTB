@@ -9,7 +9,7 @@ from utils import Rod, R2atom
 def get_monomer_xyzR(monomer_name,Ta,Tb,Tc,A2,A3):
     T_vec = np.array([Ta,Tb,Tc])
     df_mono=pd.read_csv(f'/home/ohno/Working/BTBTB/monomer/{monomer_name}.csv')
-    atoms_array_xyzR=df_mono[['X','Y','Z','R']].values
+    atoms_array_xyzR=df_mono[['X','Y','Z','atom']].values
     xyz_array = atoms_array_xyzR[:,:3];R_array = atoms_array_xyzR[:,3].reshape((-1,1))
 
     ex = np.array([1.,0.,0.]); ez = np.array([0.,0.,1.])
@@ -32,8 +32,7 @@ def get_xyzR_lines(xyzR_array,file_description):
     mol_len = len(xyzR_array)//2
     atom_index = 0
     mol_index = 0
-    for x,y,z,R in xyzR_array:
-        atom = R2atom(R)
+    for x,y,z,atom in xyzR_array:
         mol_index = atom_index//mol_len + 1
         line = '{}(Fragment={}) {} {} {}\n'.format(atom,mol_index,x,y,z)     
         lines.append(line)
