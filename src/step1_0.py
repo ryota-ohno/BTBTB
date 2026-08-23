@@ -48,7 +48,7 @@ def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取�
         else:
             len_queue-=1
             Et1=float(E_list[0]);Ep1=float(E_list[1]);Ep2=float(E_list[2])
-            E = 2*(Et1+Ep1+Ep2)
+            E = 2*(2*Et1+Ep1+Ep2)
             df_E.loc[idx, ['E_t','E_p1','E_p2','E','status']] = [Et1,Ep1,Ep2,E,'Done']
             df_E.to_csv(auto_csv,index=False)
             #break#2つ同時に計算終わったりしたらまずいので一個で切る
@@ -62,7 +62,7 @@ def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取�
                 if not(alreadyCalculated):
                     df_E_ = pd.read_csv(auto_csv)
                     num_machine2=len(df_E_[(df_E_['status']=='InProgress')&(df_E_['machine_type']==2)])
-                    if num_machine2 <13:
+                    if num_machine2 <3:
                         machine_type=2
                     else:
                         machine_type=1
