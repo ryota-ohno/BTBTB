@@ -115,22 +115,8 @@ def get_params_dict(auto_dir, num_init,fixed_param_keys,opt_param_keys):
         isDone, opt_params_matrix = get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict)
         if isDone:
             opt_params_dict={'a':opt_params_matrix[0][0],'b':opt_params_matrix[0][1]}
-            # df_init_paramsのstatusをupdate
             df_init_params = update_value_in_df(df_init_params,index,'status','Done')
-            if np.max(df_init_params.index) < index+1:##もうこれ以上は新しい計算は進まない
-                status = 'Done'
-            else:
-                status = get_values_from_df(df_init_params,index+1,'status')
             df_init_params.to_csv(init_params_csv,index=False)
-            
-            if status=='NotYet':##計算が始まっていないものがあったらこの時点で開始する　ここでダメでもまた直にlistenでgrt_params_dictまでいけば新しいのが始まる            
-                opt_params_dict = get_values_from_df(df_init_params,index+1,opt_param_keys)
-                df_init_params = update_value_in_df(df_init_params,index+1,'status','InProgress')
-                df_init_params.to_csv(init_params_csv,index=False)
-                dict_matrix.append({**fixed_params_dict,**opt_params_dict})
-            else:
-                continue
-
         else:
             for i in range(len(opt_params_matrix)):
                 opt_params_dict={'a':opt_params_matrix[i][0],'b':opt_params_matrix[i][1]}
